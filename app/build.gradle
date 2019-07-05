@@ -1,0 +1,56 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: 'kotlin-kapt'
+apply from: 'dependencies.gradle'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "dev.williamreed.letsrun"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+
+    implementation "androidx.appcompat:appcompat:$appCompat"
+    implementation "androidx.core:core-ktx:$ktxCore"
+
+    implementation "androidx.constraintlayout:constraintlayout:$constraintLayout"
+    implementation "com.google.android.material:material:$materialComponents"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav"
+    implementation "androidx.navigation:navigation-ui-ktx:$navKtx"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleExt"
+
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
+
+    implementation "io.reactivex.rxjava2:rxkotlin:$rxKotlin"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroid"
+
+    implementation "org.jsoup:jsoup:$jsoup"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    implementation "com.jakewharton.timber:timber:$timber"
+    implementation "com.jakewharton.threetenabp:threetenabp:$threeTenAbp"
+}

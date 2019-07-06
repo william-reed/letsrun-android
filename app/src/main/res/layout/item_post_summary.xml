@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="end"
-        android:lines="2"
+        android:lines="5"
         android:minLines="1"
         android:textColor="@color/forum_href"
         android:textSize="16sp"

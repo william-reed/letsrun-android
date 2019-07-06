@@ -1,7 +1,5 @@
 package dev.williamreed.letsrun.ui
 
-import android.content.Context
-import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,17 +7,17 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import dev.williamreed.letsrun.R
 import dev.williamreed.letsrun.data.PostSummary
+import dev.williamreed.letsrun.util.dateTimeToTimeAgo
 import kotlinx.android.synthetic.main.item_post_summary.view.*
-import org.threeten.bp.Instant
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.ZoneId
 
-class PostSummaryAdapter() : RecyclerView.Adapter<PostSummaryAdapter.PostSummaryViewHolder>() {
+class PostSummaryAdapter(private val threadClicked: (Int) -> Unit) :
+    RecyclerView.Adapter<PostSummaryAdapter.PostSummaryViewHolder>() {
     private val data = mutableListOf<PostSummary>()
 
     inner class PostSummaryViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(item: PostSummary) {
+            view.setOnClickListener { threadClicked(item.threadId) }
             view.title.text = item.title
             view.posts.text = item.posts.toString()
             view.last_updated.text = dateTimeToTimeAgo(item.lastUpdated, view.context)
@@ -46,7 +44,7 @@ class PostSummaryAdapter() : RecyclerView.Adapter<PostSummaryAdapter.PostSummary
         val color = if (position % 2 == 0) {
             R.color.forum_yellow
         } else {
-            R.color.forum_grey
+            R.color.forum_gray
         }
 
         holder.itemView.setBackgroundColor(
@@ -58,16 +56,5 @@ class PostSummaryAdapter() : RecyclerView.Adapter<PostSummaryAdapter.PostSummary
         )
 
         holder.bind(data[position])
-    }
-
-    private fun dateTimeToTimeAgo(localDateTime: LocalDateTime, context: Context): String {
-        val timeMs = localDateTime.toInstant(ZoneId.systemDefault().rules.getOffset(Instant.now())).toEpochMilli()
-        return DateUtils.getRelativeDateTimeString(
-            context,
-            timeMs,
-            DateUtils.MINUTE_IN_MILLIS,
-            DateUtils.WEEK_IN_MILLIS,
-            0
-        ).toString()
     }
 }

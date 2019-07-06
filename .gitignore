@@ -6,3 +6,4 @@
 /captures
 .externalNativeBuild
 *.swp
+/local.properties

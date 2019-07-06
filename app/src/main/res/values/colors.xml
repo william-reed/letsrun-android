@@ -2,13 +2,9 @@
     <color name="primaryColor">#00244e</color>
     <color name="primaryLightColor">#374b7a</color>
     <color name="primaryDarkColor">#000026</color>
-    <color name="secondaryColor">#ffffbe</color>
-    <color name="secondaryLightColor">#fffff1</color>
-    <color name="secondaryDarkColor">#cbcc8d</color>
-    <color name="primaryTextColor">#ffffff</color>
-    <color name="secondaryTextColor">#000000</color>
 
     <color name="forum_yellow">#ffffbe</color>
-    <color name="forum_grey">#c1c1c1</color>
+    <color name="forum_quoted_yellow">#feefd1</color>
+    <color name="forum_gray">#c1c1c1</color>
     <color name="forum_href">#0000FF</color>
 </resources>

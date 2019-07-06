@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/top_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/forum_gray"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/outer_space"
+        android:paddingTop="5dp"
+        android:paddingEnd="@dimen/outer_space"
+        android:paddingBottom="5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/timestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            tools:text="1 hour ago, 2:29 PM" />
+
+        <TextView
+            android:id="@+id/by"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:text="@string/by" />
+
+        <TextView
+            android:id="@+id/author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            tools:text="Scorpion_runner" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/body_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/forum_yellow"
+        android:padding="5dp"
+        android:paddingStart="@dimen/outer_space"
+        android:paddingEnd="@dimen/outer_space"
+        android:textIsSelectable="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_row"
+        tools:text="She wouldn’t stand a chance, not even in a tactical race. Field is too deep. Muir, Hassan, Dibaba, Kipyegon, tsegauye Simpson, etc\n\nIn the steeple, she has a chance of medaling.\n\n1500?\n\nWouldn’t even get out of the rounds." />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

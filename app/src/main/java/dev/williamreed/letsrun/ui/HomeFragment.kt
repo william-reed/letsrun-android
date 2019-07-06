@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.williamreed.letsrun.R
 import dev.williamreed.letsrun.ui.base.BaseViewModelFragment
@@ -24,7 +25,9 @@ class HomeFragment : BaseViewModelFragment() {
         refresh_layout.setOnRefreshListener { viewModel.fetchPostSummaries() }
         refresh_layout.isRefreshing = true
 
-        val postSummaryAdapter = PostSummaryAdapter()
+        val postSummaryAdapter = PostSummaryAdapter {threadId ->
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToThreadFragment(threadId))
+        }
 
         post_summaries.apply {
             layoutManager = LinearLayoutManager(context)

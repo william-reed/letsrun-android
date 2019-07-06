@@ -8,6 +8,7 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 import dev.williamreed.letsrun.di.DaggerViewModelFactory
 import dev.williamreed.letsrun.viewmodel.HomeViewModel
+import dev.williamreed.letsrun.viewmodel.ThreadViewModel
 import kotlin.reflect.KClass
 
 /**
@@ -24,4 +25,7 @@ abstract class ViewModelModule {
 
     @[Binds IntoMap ViewModelKey(HomeViewModel::class)]
     internal abstract fun bindHomeViewModel(viewModel: HomeViewModel): ViewModel
+
+    @[Binds IntoMap ViewModelKey(ThreadViewModel::class)]
+    internal abstract fun bindThreadViewModel(viewModel: ThreadViewModel): ViewModel
 }

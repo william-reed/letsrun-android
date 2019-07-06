@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dev.williamreed.letsrun.R
 import dev.williamreed.letsrun.ui.base.BaseViewModelFragment
 import dev.williamreed.letsrun.viewmodel.ThreadViewModel
@@ -29,15 +30,26 @@ class ThreadFragment : BaseViewModelFragment() {
 
         viewModel.fetchReplies(args.threadId)
 
+        // recycler view
         val adapter = RepliesAdapter()
         thread_replies.apply {
             layoutManager = LinearLayoutManager(context)
             this.adapter = adapter
+
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    if (!recyclerView.canScrollVertically(1)) {
+                        viewModel.fetchNextPage(args.threadId)
+                    }
+                }
+            })
         }
 
+        // view model
         viewModel.getThreadReplies().observe(viewLifecycleOwner, Observer {
             refresh_layout.isRefreshing = false
             adapter.updateData(it)
+
         })
     }
 

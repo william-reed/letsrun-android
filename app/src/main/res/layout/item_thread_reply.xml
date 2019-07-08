@@ -46,6 +46,7 @@
         android:id="@+id/body_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:autoLink="web"
         android:background="@color/forum_yellow"
         android:padding="5dp"
         android:paddingStart="@dimen/outer_space"

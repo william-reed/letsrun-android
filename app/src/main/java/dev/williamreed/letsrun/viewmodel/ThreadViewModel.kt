@@ -7,6 +7,7 @@ import dev.williamreed.letsrun.service.ForumService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -16,7 +17,7 @@ import javax.inject.Inject
  */
 class ThreadViewModel @Inject constructor(val forumService: ForumService) : BaseViewModel() {
     private val threadReplies = MutableLiveData<List<ThreadReply>>()
-    private val threadRepliesMutable = mutableListOf<ThreadReply>()
+    private val threadRepliesMutable = TreeSet<ThreadReply>(kotlin.Comparator { o1, o2 -> o1.id - o2.id })
 
     private var pagesLoaded = 0
     // normally i would say this needs to be an atomic boolean but we are in main thread android land.
@@ -38,9 +39,8 @@ class ThreadViewModel @Inject constructor(val forumService: ForumService) : Base
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError { fetchingNextPage = false }
                 .subscribeNetwork({
-                    threadRepliesMutable.add(it)
-                    threadRepliesMutable.sortBy { it.id }
-                    threadReplies.value = threadRepliesMutable
+                    threadRepliesMutable.addAll(it)
+                    threadReplies.value = threadRepliesMutable.toList()
                 }, {
                     Timber.e(it)
                     messageState.value = "Error getting thread replies."
@@ -62,28 +62,23 @@ class ThreadViewModel @Inject constructor(val forumService: ForumService) : Base
         // this is my "lock"
         fetchingNextPage = true
 
-        // have there been any new items?
-        var newItems = false
         fetchNextDisposable =
             forumService.fetchThreadReplies(threadId, pagesLoaded)
                 .observeOn(AndroidSchedulers.mainThread())
                 // always want this on error to occur, not just non-network error
                 .doOnError { fetchingNextPage = false }
                 .subscribeNetwork({
-                    newItems = true
-                    threadRepliesMutable.add(it)
-                    threadRepliesMutable.sortBy { it.id }
-                    threadReplies.value = threadRepliesMutable
+                    // _only_ increment pages loaded if we got something from that next page. this allows us to not care
+                    // if there isn't another page yet
+                    if (it.isNotEmpty()) {
+                        pagesLoaded++
+                    }
+                    threadRepliesMutable.addAll(it)
+                    threadReplies.value = threadRepliesMutable.toList()
+                    fetchingNextPage = false
                 }, {
                     Timber.e(it)
                     messageState.value = "Error getting more thread replies."
-                }, {
-                    // _only_ increment pages loaded if we got something from that next page. this allows us to not care
-                    // if there isn't another page yet
-                    if (newItems) {
-                        pagesLoaded++
-                    }
-                    fetchingNextPage = false
                 }).also { disposables.add(it) }
     }
 

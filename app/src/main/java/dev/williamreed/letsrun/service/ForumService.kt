@@ -52,7 +52,7 @@ class ForumService {
      * @param threadId the thread id
      * @param page the page of the post, starting at 0 (as is done in the letsrun URL)
      */
-    fun fetchThreadReplies(threadId: Int, page: Int = 0): Flowable<ThreadReply> =
+    fun fetchThreadReplies(threadId: Int, page: Int = 0): Single<List<ThreadReply>> =
         // get all of the reply id's first
         Single.fromCallable {
             Jsoup.connect("https://www.letsrun.com/forum/flat_read.php?thread=$threadId&page=$page").get()
@@ -81,15 +81,16 @@ class ForumService {
             }
             // parse the JSON
             .map { Json.nonstrict.parse(ThreadReply.serializer(), it) }
+            .toList()
 
     /**
      * Fetch the thread replies for multiple pages
      * @param threadId the thread id
      * @param pages the pages to fetch, inclusive
      */
-    fun fetchThreadRepliesForPages(threadId: Int, pages: Int): Flowable<ThreadReply> =
+    fun fetchThreadRepliesForPages(threadId: Int, pages: Int): Flowable<List<ThreadReply>> =
         Flowable.range(0, pages)
-            .flatMap { fetchThreadReplies(threadId, it) }
+            .flatMapSingle { fetchThreadReplies(threadId, it) }
 
     private companion object {
         // 7/3/2019 3:08pm

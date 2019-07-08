@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import dev.williamreed.letsrun.data.ThreadReply
 import dev.williamreed.letsrun.service.ForumService
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -20,23 +21,34 @@ class ThreadViewModel @Inject constructor(val forumService: ForumService) : Base
     private var pagesLoaded = 0
     // normally i would say this needs to be an atomic boolean but we are in main thread android land.
     private var fetchingNextPage = false
+    private var fetchNextDisposable: Disposable? = null
 
     /**
      * Fetch / refresh replies for the pages currently loaded
      */
     fun fetchReplies(threadId: Int) {
+        // if anything is being fetched, cancel it
+        fetchNextDisposable?.dispose()
+
         threadRepliesMutable.clear()
-        forumService.fetchThreadRepliesForPages(threadId, pagesLoaded + 1)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeNetwork({
-                threadRepliesMutable.add(it)
-                threadReplies.value = threadRepliesMutable
-            }, {
-                Timber.e(it)
-                messageState.value = "Error getting thread replies."
-            }, {
-                pagesLoaded = 1
-            })
+        fetchingNextPage = true
+
+        disposables.add(
+            forumService.fetchThreadRepliesForPages(threadId, pagesLoaded + 1)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnError { fetchingNextPage = false }
+                .subscribeNetwork({
+                    threadRepliesMutable.add(it)
+                    threadRepliesMutable.sortBy { it.id }
+                    threadReplies.value = threadRepliesMutable
+                }, {
+                    Timber.e(it)
+                    messageState.value = "Error getting thread replies."
+                }, {
+                    fetchingNextPage = false
+                    pagesLoaded = 1
+                })
+        )
     }
 
     /**
@@ -52,26 +64,27 @@ class ThreadViewModel @Inject constructor(val forumService: ForumService) : Base
 
         // have there been any new items?
         var newItems = false
-
-        forumService.fetchThreadReplies(threadId, pagesLoaded)
-            .observeOn(AndroidSchedulers.mainThread())
-            // always want this on error to occur, not just non-network error
-            .doOnError { fetchingNextPage = false }
-            .subscribeNetwork({
-                newItems = true
-                threadRepliesMutable.add(it)
-                threadReplies.value = threadRepliesMutable
-            }, {
-                Timber.e(it)
-                messageState.value = "Error getting more thread replies."
-            }, {
-                // _only_ increment pages loaded if we got something from that next page. this allows us to not care
-                // if there isn't another page yet
-                if (newItems) {
-                    pagesLoaded++
-                }
-                fetchingNextPage = false
-            })
+        fetchNextDisposable =
+            forumService.fetchThreadReplies(threadId, pagesLoaded)
+                .observeOn(AndroidSchedulers.mainThread())
+                // always want this on error to occur, not just non-network error
+                .doOnError { fetchingNextPage = false }
+                .subscribeNetwork({
+                    newItems = true
+                    threadRepliesMutable.add(it)
+                    threadRepliesMutable.sortBy { it.id }
+                    threadReplies.value = threadRepliesMutable
+                }, {
+                    Timber.e(it)
+                    messageState.value = "Error getting more thread replies."
+                }, {
+                    // _only_ increment pages loaded if we got something from that next page. this allows us to not care
+                    // if there isn't another page yet
+                    if (newItems) {
+                        pagesLoaded++
+                    }
+                    fetchingNextPage = false
+                }).also { disposables.add(it) }
     }
 
     fun getThreadReplies(): LiveData<List<ThreadReply>> = threadReplies

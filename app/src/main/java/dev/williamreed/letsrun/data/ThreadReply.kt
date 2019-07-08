@@ -4,6 +4,9 @@ import kotlinx.serialization.*
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 
+/**
+ * A reply to a particular thread
+ */
 @Serializable
 data class ThreadReply(
     val id: Int,
@@ -17,7 +20,7 @@ data class ThreadReply(
 )
 
 /**
- * Wrapper around a [LocalDateTime]
+ * Wrapper around a [LocalDateTime] to make it serializable
  */
 @Serializable
 data class LetsRunDate(

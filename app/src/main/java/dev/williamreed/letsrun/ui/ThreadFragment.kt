@@ -14,6 +14,11 @@ import dev.williamreed.letsrun.ui.base.BaseViewModelFragment
 import dev.williamreed.letsrun.viewmodel.ThreadViewModel
 import kotlinx.android.synthetic.main.fragment_thread.*
 
+/**
+ * Thread Fragment
+ *
+ * Show a particular thread, its title, and its replies.
+ */
 class ThreadFragment : BaseViewModelFragment() {
     private val viewModel by lazyViewModel<ThreadViewModel>()
     private val args by navArgs<ThreadFragmentArgs>()

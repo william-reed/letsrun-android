@@ -7,6 +7,11 @@ import dev.williamreed.letsrun.ui.base.BaseAdapter
 import dev.williamreed.letsrun.util.dateTimeToTimeAgo
 import kotlinx.android.synthetic.main.item_thread_reply.view.*
 
+/**
+ * Replies Adapter
+ *
+ * Simple replies adapter for threads
+ */
 class RepliesAdapter : BaseAdapter<ThreadReply>(R.layout.item_thread_reply) {
     override fun bindItem(item: ThreadReply, view: View) {
         view.timestamp.text = dateTimeToTimeAgo(item.datestamp.datestamp, view.context)

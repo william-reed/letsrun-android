@@ -10,6 +10,11 @@ import dev.williamreed.letsrun.data.PostSummary
 import dev.williamreed.letsrun.util.dateTimeToTimeAgo
 import kotlinx.android.synthetic.main.item_post_summary.view.*
 
+/**
+ * Post Summary Adapter
+ *
+ * Adapter for post summaries for the home fragment. Alternates background colors to match with the forum
+ */
 class PostSummaryAdapter(private val threadClicked: (Int, String) -> Unit) :
     RecyclerView.Adapter<PostSummaryAdapter.PostSummaryViewHolder>() {
     private val data = mutableListOf<PostSummary>()

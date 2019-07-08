@@ -8,6 +8,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import timber.log.Timber
 import javax.inject.Inject
 
+/**
+ * Home View Model
+ *
+ * View model for the home fragment
+ */
 class HomeViewModel @Inject constructor(val forumService: ForumService) : BaseViewModel() {
     private val postSummaries = MutableLiveData<List<PostSummary>>()
 

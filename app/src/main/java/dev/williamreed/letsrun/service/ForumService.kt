@@ -11,6 +11,11 @@ import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneOffset
 import org.threeten.bp.format.DateTimeFormatter
 
+/**
+ * Forum Service
+ *
+ * The interface to LetsRun data
+ */
 class ForumService {
 
     /**

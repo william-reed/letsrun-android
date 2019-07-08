@@ -12,6 +12,11 @@ import dev.williamreed.letsrun.ui.base.BaseViewModelFragment
 import dev.williamreed.letsrun.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 
+/**
+ * Home Fragment
+ *
+ * Shows post summaries from the forum home page
+ */
 class HomeFragment : BaseViewModelFragment() {
     private val viewModel by lazyViewModel<HomeViewModel>()
 
@@ -26,7 +31,12 @@ class HomeFragment : BaseViewModelFragment() {
         refresh_layout.isRefreshing = true
 
         val postSummaryAdapter = PostSummaryAdapter { threadId, threadTitle ->
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToThreadFragment(threadId, threadTitle))
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToThreadFragment(
+                    threadId,
+                    threadTitle
+                )
+            )
         }
 
         post_summaries.apply {

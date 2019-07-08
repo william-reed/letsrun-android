@@ -8,6 +8,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import timber.log.Timber
 import javax.inject.Inject
 
+/**
+ * Thread View Model
+ *
+ * VM for the thread fragment
+ */
 class ThreadViewModel @Inject constructor(val forumService: ForumService) : BaseViewModel() {
     private val threadReplies = MutableLiveData<List<ThreadReply>>()
     private val threadRepliesMutable = mutableListOf<ThreadReply>()

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +13,6 @@ import dev.williamreed.letsrun.R
 import dev.williamreed.letsrun.ui.base.BaseViewModelFragment
 import dev.williamreed.letsrun.viewmodel.ThreadViewModel
 import kotlinx.android.synthetic.main.fragment_thread.*
-
 
 class ThreadFragment : BaseViewModelFragment() {
     private val viewModel by lazyViewModel<ThreadViewModel>()
@@ -28,6 +28,7 @@ class ThreadFragment : BaseViewModelFragment() {
         refresh_layout.setOnRefreshListener { viewModel.fetchReplies(args.threadId) }
         refresh_layout.isRefreshing = true
 
+        setupToolbar()
         viewModel.fetchReplies(args.threadId)
 
         // recycler view
@@ -51,6 +52,12 @@ class ThreadFragment : BaseViewModelFragment() {
             adapter.updateData(it)
 
         })
+    }
+
+    private fun setupToolbar() {
+        toolbar.title = args.title
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp)
+        toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
     }
 
 }

@@ -25,8 +25,8 @@ class HomeFragment : BaseViewModelFragment() {
         refresh_layout.setOnRefreshListener { viewModel.fetchPostSummaries() }
         refresh_layout.isRefreshing = true
 
-        val postSummaryAdapter = PostSummaryAdapter {threadId ->
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToThreadFragment(threadId))
+        val postSummaryAdapter = PostSummaryAdapter { threadId, threadTitle ->
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToThreadFragment(threadId, threadTitle))
         }
 
         post_summaries.apply {

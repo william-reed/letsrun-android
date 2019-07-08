@@ -1,8 +1,15 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
+        <item name="android:statusBarColor">@android:color/black</item>
+    </style>
+
+    <style name="AppTheme.ToolbarTitleExpanded">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">19sp</item>
+        <item name="android:maxLines">5</item>
     </style>
 
 </resources>

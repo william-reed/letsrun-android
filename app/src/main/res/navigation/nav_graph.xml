@@ -23,6 +23,9 @@
         <argument
             android:name="threadId"
             app:argType="integer" />
+        <argument
+            android:name="title"
+            app:argType="string" />
     </fragment>
 
 </navigation>

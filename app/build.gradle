@@ -37,6 +37,8 @@ dependencies {
 
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayout"
     implementation "com.google.android.material:material:$materialComponents"
+    implementation "net.opacapp:multiline-collapsingtoolbar:$collapsingToolbar"
+
     implementation "androidx.navigation:navigation-fragment-ktx:$nav"
     implementation "androidx.navigation:navigation-ui-ktx:$navKtx"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleExt"

@@ -10,14 +10,14 @@ import dev.williamreed.letsrun.data.PostSummary
 import dev.williamreed.letsrun.util.dateTimeToTimeAgo
 import kotlinx.android.synthetic.main.item_post_summary.view.*
 
-class PostSummaryAdapter(private val threadClicked: (Int) -> Unit) :
+class PostSummaryAdapter(private val threadClicked: (Int, String) -> Unit) :
     RecyclerView.Adapter<PostSummaryAdapter.PostSummaryViewHolder>() {
     private val data = mutableListOf<PostSummary>()
 
     inner class PostSummaryViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(item: PostSummary) {
-            view.setOnClickListener { threadClicked(item.threadId) }
+            view.setOnClickListener { threadClicked(item.threadId, item.title) }
             view.title.text = item.title
             view.posts.text = item.posts.toString()
             view.last_updated.text = dateTimeToTimeAgo(item.lastUpdated, view.context)

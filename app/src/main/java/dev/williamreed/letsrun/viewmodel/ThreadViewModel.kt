@@ -31,7 +31,6 @@ class ThreadViewModel @Inject constructor(val forumService: ForumService) : Base
                 messageState.value = "Error getting thread replies."
             }, {
                 pagesLoaded = 1
-                Timber.e(threadRepliesMutable.size.toString())
             })
     }
 

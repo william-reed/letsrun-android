@@ -17,7 +17,7 @@ import javax.inject.Inject
  */
 class ThreadViewModel @Inject constructor(val forumService: ForumService) : BaseViewModel() {
     private val threadReplies = MutableLiveData<List<ThreadReply>>()
-    private val threadRepliesMutable = TreeSet<ThreadReply>(kotlin.Comparator { o1, o2 -> o1.id - o2.id })
+    private val threadRepliesMutable = TreeSet<ThreadReply>(kotlin.Comparator { o1, o2 -> (o1.id - o2.id).toInt() })
 
     private var pagesLoaded = 0
     // normally i would say this needs to be an atomic boolean but we are in main thread android land.

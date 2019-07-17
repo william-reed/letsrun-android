@@ -1,0 +1,54 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:1919690937440581808",
+      "lastPropertyId": "7:7866081493027131890",
+      "name": "ThreadReply",
+      "properties": [
+        {
+          "id": "1:6986292099215049989",
+          "name": "id"
+        },
+        {
+          "id": "2:7474043926145067618",
+          "name": "thread"
+        },
+        {
+          "id": "3:3433439769044719722",
+          "name": "author"
+        },
+        {
+          "id": "4:7510277725963336625",
+          "name": "parent"
+        },
+        {
+          "id": "5:8176007760530499004",
+          "name": "subject"
+        },
+        {
+          "id": "6:1753370154787239861",
+          "name": "bodyText"
+        },
+        {
+          "id": "7:7866081493027131890",
+          "name": "datestamp"
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "1:1919690937440581808",
+  "lastIndexId": "0:0",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 4,
+  "modelVersionParserMinimum": 4,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}

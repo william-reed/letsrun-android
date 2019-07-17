@@ -5,6 +5,7 @@ apply plugin: 'kotlinx-serialization'
 apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 apply from: 'dependencies.gradle'
+apply plugin: 'io.objectbox'
 
 android {
     compileSdkVersion 28

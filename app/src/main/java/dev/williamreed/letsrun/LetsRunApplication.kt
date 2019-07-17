@@ -7,6 +7,8 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import dagger.android.support.HasSupportFragmentInjector
+import dev.williamreed.letsrun.data.ObjectBox
+import dev.williamreed.letsrun.data.ThreadReply
 import dev.williamreed.letsrun.di.DaggerAppComponent
 import timber.log.Timber
 import javax.inject.Inject
@@ -33,6 +35,9 @@ class LetsRunApplication : Application(), HasActivityInjector, HasSupportFragmen
 
         AndroidThreeTen.init(this)
 
+        ObjectBox.init(this)
+        // clear cache on every app start
+        ObjectBox.boxStore.boxFor(ThreadReply::class.java).removeAll()
     }
 
     override fun supportFragmentInjector() = fragmentInjector
